@@ -22,34 +22,35 @@ namespace dephBrowser
             CefSettings settings = new CefSettings();
             Cef.Initialize(settings);
 
-            Browser1.Load("https://google.com/");
+            textBox1.Text = "https://google.com/";
+            Browser1.Load(textBox1.Text);
+
+            Browser1.AddressChanged += Browser1_AddressChanged;
+            textBox1.Click += textBox1_Click;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Contains("https://") || textBox1.Text.Contains("http://"))
-            {
-                string namesite = textBox1.Text;
+            Browser1.Load(textBox1.Text);
+          
+                /*string namesite = textBox1.Text;
                 try
                 {
                     Uri uri = new Uri(namesite);
-                    Browser1.Load(uri.ToString());
+                    Browser1.Load(namesite);
                 }
                 catch (Exception)
                 {
                     Uri uri = new Uri("https://google.com");
                     Browser1.Load(uri.ToString());
                     MessageBox.Show("Wrong URL");
-                }
-                File.AppendAllText("history.t$", textBox1.Text + "\n");
-            }
-            else
+                }*/
+            
+            /*else
             {
                 Uri uri = new Uri("https://google.com/search?q=" + textBox1.Text);
                 Browser1.Load(uri.ToString());
-
-                File.AppendAllText("history.t$", "google: " + textBox1.Text + "\n");
-            }
+            }*/
 
         }
 
@@ -68,15 +69,22 @@ namespace dephBrowser
             Browser1.Forward();
         }
 
-        private void Browser1_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        private void Browser1_AddressChanged(object sender, AddressChangedEventArgs e)
         {
-            
+            this.Invoke(new MethodInvoker(() =>
+            {
+                textBox1.Text = e.Address;
+            }));
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = Browser1.Address;
-            
+            textBox1.SelectAll();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Cef.Shutdown();
         }
     }
 }
