@@ -23,50 +23,65 @@ namespace dephBrowser
             Cef.Initialize(settings);
 
             textBox1.Text = "https://google.com/";
-            Browser1.Load(textBox1.Text);
+            ChromiumWebBrowser Browser1 = new ChromiumWebBrowser(textBox1.Text);
+            Browser1.Parent = tabControl1.SelectedTab;
+            //this.pContainer.Controls.Add(Browser1);
 
             Browser1.AddressChanged += Browser1_AddressChanged;
+            Browser1.TitleChanged += Browser1_TitleChanged;
             textBox1.Click += textBox1_Click;
+
+            //tabControl1.Click += TabControl1_Click;
+        }
+
+        private void TabControl1_Click(object sender, EventArgs e)
+        {
+            this.Invoke(new MethodInvoker(() =>
+            {
+                //textBox1.Text ;
+            }));
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Browser1.Load(textBox1.Text);
+
+            ChromiumWebBrowser Browser1 = tabControl1.SelectedTab.Controls[0] as ChromiumWebBrowser;
+            if (Browser1 != null)
+                Browser1.Load(textBox1.Text);
           
-                /*string namesite = textBox1.Text;
-                try
-                {
-                    Uri uri = new Uri(namesite);
-                    Browser1.Load(namesite);
-                }
-                catch (Exception)
-                {
-                    Uri uri = new Uri("https://google.com");
-                    Browser1.Load(uri.ToString());
-                    MessageBox.Show("Wrong URL");
-                }*/
-            
-            /*else
-            {
-                Uri uri = new Uri("https://google.com/search?q=" + textBox1.Text);
-                Browser1.Load(uri.ToString());
-            }*/
+           
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Browser1.Reload();
+            ChromiumWebBrowser Browser1 = tabControl1.SelectedTab.Controls[0] as ChromiumWebBrowser;
+            if (Browser1 != null)
+                Browser1.Reload();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Browser1.Back();
+            ChromiumWebBrowser Browser1 = tabControl1.SelectedTab.Controls[0] as ChromiumWebBrowser;
+            if (Browser1 != null)
+            {
+                if (Browser1.CanGoBack)
+                {
+                    Browser1.Back();
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Browser1.Forward();
+            ChromiumWebBrowser Browser1 = tabControl1.SelectedTab.Controls[0] as ChromiumWebBrowser;
+            if (Browser1 != null)
+            {
+                if (Browser1.CanGoForward)
+                {
+                    Browser1.Forward();
+                }
+            }
         }
 
         private void Browser1_AddressChanged(object sender, AddressChangedEventArgs e)
@@ -85,6 +100,50 @@ namespace dephBrowser
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Cef.Shutdown();
+        }
+
+
+        private void Browser1_TitleChanged(object sender, TitleChangedEventArgs e)
+        {
+            this.BeginInvoke(new MethodInvoker(() =>
+            {
+                tabControl1.SelectedTab.Text = e.Title;
+            }));
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            TabPage tab = new TabPage();
+            tab.Text = "New tab";
+            tabControl1.Controls.Add(tab);
+            tabControl1.SelectTab(tabControl1.TabCount - 1);
+            ChromiumWebBrowser Browser1 = new ChromiumWebBrowser("https://google.com");
+            Browser1.Parent = tab;
+            Browser1.Dock = DockStyle.Fill;
+            textBox1.Text = "https://google.com";
+            Browser1.AddressChanged += Browser1_AddressChanged;
+            Browser1.TitleChanged += Browser1_TitleChanged;
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void deleteTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab.Dispose();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
