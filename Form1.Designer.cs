@@ -154,11 +154,11 @@ namespace dephBrowser
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.ContextMenuStrip = this.contextMenuStrip1;
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(11, 52);
+            this.tabControl1.Location = new System.Drawing.Point(0, 45);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1370, 522);
+            this.tabControl1.Size = new System.Drawing.Size(1392, 529);
             this.tabControl1.TabIndex = 3;
             // 
             // contextMenuStrip1
@@ -182,7 +182,7 @@ namespace dephBrowser
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(1362, 496);
+            this.tabPage1.Size = new System.Drawing.Size(1384, 503);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;

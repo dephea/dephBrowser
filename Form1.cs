@@ -30,6 +30,7 @@ namespace dephBrowser
             Browser1.AddressChanged += Browser1_AddressChanged;
             Browser1.TitleChanged += Browser1_TitleChanged;
             textBox1.Click += textBox1_Click;
+            textBox1.KeyDown += textBox1_KeyDown;
 
             //tabControl1.Click += TabControl1_Click;
         }
@@ -144,6 +145,16 @@ namespace dephBrowser
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                button5_Click(this, new EventArgs());
+
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
