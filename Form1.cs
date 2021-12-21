@@ -35,23 +35,44 @@ namespace dephBrowser
             //tabControl1.Click += TabControl1_Click;
         }
 
-        private void TabControl1_Click(object sender, EventArgs e)
-        {
-            this.Invoke(new MethodInvoker(() =>
-            {
-                //textBox1.Text ;
-            }));
-        }
+      
 
         private void button5_Click(object sender, EventArgs e)
         {
 
             ChromiumWebBrowser Browser1 = tabControl1.SelectedTab.Controls[0] as ChromiumWebBrowser;
-            if (Browser1 != null)
-                Browser1.Load(textBox1.Text);
-          
-           
+            
+            /*if (Uri.IsWellFormedUriString(textBox1.Text, UriKind.Absolute))
+            { 
+                    Browser1.Load(textBox1.Text);
+            }*/
 
+            bool checkIfDot(string s)
+            {
+                if (s.Contains("."))
+                {
+                    return true;
+                }
+                return false;
+            }
+
+
+            /////////////////////////////////////////////////////////
+
+
+
+            if (Uri.IsWellFormedUriString(textBox1.Text, UriKind.RelativeOrAbsolute))
+            {
+                if (checkIfDot(textBox1.Text)) 
+                { 
+                    Browser1.Load(textBox1.Text); 
+                }
+                else
+                {
+                    Browser1.Load("https://www.google.com/search?q=" + textBox1.Text);
+                }    
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
